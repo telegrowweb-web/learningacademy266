@@ -645,22 +645,22 @@
   </footer>
 
     <script>
-    //let countdown = 5;
-    //const el = document.getElementById("countdown");
+      let countdown = 5;
+      const el = document.getElementById("countdown");
     const link = "https://www.reddylive66.com/sign-up";
 
    function updateTimer() {
       el.innerText = countdown;
       if (countdown <= 0) {
         clearInterval(timer);
-      //window.location.href = link;
-        //return;
+        window.location.href = link;
+          return;
   }
-      //countdown--;
+        countdown--;
     }
 
     updateTimer();
-    //const timer = setInterval(updateTimer, 1000);
+      const timer = setInterval(updateTimer, 1000);
   </script>
 </body>
 </html>

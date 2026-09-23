@@ -321,23 +321,349 @@
     </p>
   </footer>
 
-  <script>
-    // Countdown from 10 → redirect to signup after 10 seconds
-    let seconds = 10;
-    const el = document.getElementById('countdown');
-    const signupUrl = 'https://www.reddylive66.com/sign-up';
-
-    function updateCountdown() {
-      el.textContent = seconds + (seconds === 1 ? ' SECOND' : ' SECONDS');
-      if (seconds <= 0) {
-        window.location.href = signupUrl;
-        return;
-      }
-      seconds--;
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reddy Live66</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #0a3d5c 0%, #0d4a6e 30%, #0f5a7a 60%, #0a3d5c 100%);
+      color: #ffffff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Soft radial glow behind content */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(100, 180, 255, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px 30px;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    /* Main Title */
+    .main-title {
+      font-size: clamp(1.9rem, 6vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #7dd3fc 0%, #a5b4fc 40%, #c4b5fd 70%, #ddd6fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    /* Tagline */
+    .tagline {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #e0f2fe;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .tagline .sparkle {
+      color: #fbbf24;
+      font-size: 0.9rem;
+    }
+
+    /* Countdown */
+    .countdown {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+    }
+
+    /* Logo Circle */
+    .logo-circle {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #a5b4fc 0%, #818cf8 40%, #c084fc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      box-shadow:
+        0 0 0 6px rgba(165, 180, 252, 0.25),
+        0 0 0 12px rgba(129, 140, 248, 0.12),
+        0 12px 40px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .logo-circle::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #c4b5fd 0%, #a78bfa 50%, #818cf8 100%);
+      z-index: 0;
+    }
+
+    .logo-text {
+      position: relative;
+      z-index: 1;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1.25;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Social proof */
+    .social-proof {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 10px;
+    }
+
+    .features {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .features .check {
+      color: #4ade80;
+      font-size: 1rem;
+    }
+
+    /* CTA Button */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+      color: #1e293b;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 48px;
+      border-radius: 50px;
+      box-shadow:
+        0 4px 14px rgba(245, 158, 11, 0.45),
+        0 2px 4px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 22px;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 20px rgba(245, 158, 11, 0.55),
+        0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Subtext */
+    .subtext {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .subtext .diamond {
+      color: #67e8f9;
+    }
+
+    .subtext .globe {
+      color: #67e8f9;
+    }
+
+    /* Ads credit */
+    .ads-credit {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .ads-credit a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+
+    /* Footer */
+    .footer {
+      width: 100%;
+      background: #0f172a;
+      padding: 16px 20px 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .disclaimer {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      max-width: 720px;
+      margin: 0 auto 12px;
+    }
+
+    .disclaimer strong {
+      color: #cbd5e1;
+    }
+
+    .footer-links {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
+    .footer-links a:hover {
+      color: #e2e8f0;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .logo-circle {
+        width: 150px;
+        height: 150px;
+      }
+      .logo-text {
+        font-size: 1rem;
+      }
+      .cta-btn {
+        padding: 14px 40px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="main-title">REDDY LIVE66</h1>
+
+    <p class="tagline">
+      <span class="sparkle">✨</span>
+      Secure • Fast • Seamless
+      <span class="sparkle">✨</span>
+    </p>
+
+    <div class="countdown" id="countdown">10 SECONDS</div>
+
+    <div class="logo-circle">
+      <div class="logo-text">REDDY<br>LIVE66</div>
+    </div>
+
+    <p class="social-proof">Thousands of users already joined</p>
+
+    <p class="features">
+      <span class="check">✅</span>
+      Quick signup • Instant access
+    </p>
+
+    <a href="https://www.reddylive66.com/sign-up" class="cta-btn" target="_blank" rel="noopener noreferrer">
+      GET STARTED
+    </a>
+
+    <p class="subtext">
+      <span class="diamond">💎</span>
+      Precision. Power. Passion
+      <span class="globe">🌐</span>
+      – Join Now
+    </p>
+
+    <p class="ads-credit">
+      Ads Managed by <a href="https://telegram.me/+TRlJl628l-FkMWE9" target="_blank" rel="noopener noreferrer">@Nexgroww_agency</a>
+    </p>
+  </div>
+
+  <footer class="footer">
+    <p class="disclaimer">
+      <strong>Disclaimer:</strong> For educational purposes only. Trading and investing in financial markets involves risk, including possible loss of capital. Past performance is not indicative of future results. This is not financial advice.
+    </p>
+    <p class="footer-links">
+      <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a>
+    </p>
+  </footer>
+
+    <script>
+    //let countdown = 5;
+    //const el = document.getElementById("countdown");
+    const link = "https://www.reddylive66.com/sign-up";
+
+   function updateTimer() {
+      el.innerText = countdown;
+      if (countdown <= 0) {
+        clearInterval(timer);
+      //window.location.href = link;
+        //return;
+  }
+      //countdown--;
+    }
+
+    updateTimer();
+    //const timer = setInterval(updateTimer, 1000);
   </script>
+</body>
+</html>
+
 </body>
 </html>
